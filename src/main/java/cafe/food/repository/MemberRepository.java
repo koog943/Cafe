@@ -1,13 +1,13 @@
 package cafe.food.repository;
 
-import cafe.food.domain.member.User;
+import cafe.food.domain.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByName(String name);
+public interface UserRepository extends JpaRepository<Member, Long> {
+    Optional<Member> findByName(String name);
 
 }
