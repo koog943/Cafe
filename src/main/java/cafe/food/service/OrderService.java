@@ -3,12 +3,9 @@ package cafe.food.service;
 import cafe.food.domain.Order;
 import cafe.food.domain.food.Food;
 import cafe.food.domain.food.OrderFood;
-import cafe.food.domain.member.User;
+import cafe.food.domain.member.Member;
 import cafe.food.domain.status;
-import cafe.food.repository.FoodRepository;
-import cafe.food.repository.OrderFoodRepository;
 import cafe.food.repository.OrderRepository;
-import cafe.food.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +17,9 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public Order order(User user, List<Food> foods) {
+    public Order order(Member member, List<Food> foods) {
         Order order = Order.builder()
-                .user(user)
+                .member(member)
                 .build();
 
 
@@ -34,12 +31,12 @@ public class OrderService {
             order.addOrderFood(orderFood);
         });
 
-        user.addOrder(order);
+        member.addOrder(order);
         return order;
     }
 
-    public Order findByUserOrder(User user) {
-        return orderRepository.findByUser(user).orElse(null);
+    public Order findByMember(Member member) {
+        return orderRepository.findByMember(member).orElse(null);
     }
 
     public Order cancelOrder(Order order) {

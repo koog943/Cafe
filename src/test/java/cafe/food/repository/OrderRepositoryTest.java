@@ -3,13 +3,10 @@ package cafe.food.repository;
 import cafe.food.domain.Order;
 import cafe.food.domain.food.Dessert;
 import cafe.food.domain.food.Drink;
-import cafe.food.domain.food.Food;
 import cafe.food.domain.food.OrderFood;
 import cafe.food.domain.member.Address;
 import cafe.food.domain.member.GRADE;
-import cafe.food.domain.member.User;
-import lombok.RequiredArgsConstructor;
-import org.assertj.core.api.Assertions;
+import cafe.food.domain.member.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,11 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@ActiveProfiles("test")
 class OrderRepositoryTest {
 
     @Autowired
@@ -33,16 +28,16 @@ class OrderRepositoryTest {
     @Autowired
     FoodRepository foodRepository;
     @Autowired
-    UserRepository userRepository;
+    MemberRepository memberRepository;
 
     @Test
     void order() {
-        User user = saveMember();
+        Member member = saveMember();
         Drink drink = saveDrink();
         Dessert dessert = saveDessert();
 
         Order order = Order.builder()
-                .user(user)
+                .member(member)
                 .build();
 
         OrderFood orderDessert = OrderFood.builder()
@@ -65,10 +60,10 @@ class OrderRepositoryTest {
         Order findOrder = orderRepository.findById(1L).orElse(null);
 
         assertThat(findOrder.getOrderPrice()).isEqualTo(25000);
-        assertThat(findOrder.getUser()).isEqualTo(user);
+        assertThat(findOrder.getMember()).isEqualTo(member);
 
 
-        List<Order> orders = user.getOrders();
+        List<Order> orders = member.getOrders();
 
         System.out.println("====================");
         for (Order order1 : orders) {
@@ -98,17 +93,16 @@ class OrderRepositoryTest {
         return dessert;
     }
 
-    private User saveMember() {
+    private Member saveMember() {
         Address address = new Address("도시", "주소", "집");
-        User user = User.builder().
+        Member member = Member.builder().
                 email("mail1").
                 password("pw1").
                 name("user1").
                 address(address).
-                phone("010-1111-1111").
                 grade(GRADE.VIP).
                 build();
 
-        return user;
+        return member;
     }
 }

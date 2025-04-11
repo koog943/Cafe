@@ -6,9 +6,8 @@ import cafe.food.domain.food.Drink;
 import cafe.food.domain.food.Food;
 import cafe.food.domain.member.Address;
 import cafe.food.domain.member.GRADE;
-import cafe.food.domain.member.User;
+import cafe.food.domain.member.Member;
 import cafe.food.domain.status;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,29 +26,29 @@ class OrderServiceTest {
     OrderService orderService;
 
     @Autowired
-    UserService userService;
+    MemberService memberService;
 
     @Autowired
     FoodService foodService;
 
     @Test
     void order() {
-        User user = getUser();
+        Member member = getUser();
         List<Food> foods = getFoods();
 
-        Order order = orderService.order(user, foods);
+        Order order = orderService.order(member, foods);
 
-        assertThat(order.getUser()).isEqualTo(user);
+        assertThat(order.getMember()).isEqualTo(member);
         assertThat(order.getOrderFoods().size()).isEqualTo(2);
         assertThat(order.getOrderPrice()).isEqualTo(25000);
     }
 
     @Test
     void cancel() {
-        User user = getUser();
+        Member member = getUser();
         List<Food> foods = getFoods();
 
-        Order order = orderService.order(user, foods);
+        Order order = orderService.order(member, foods);
         assertThat(order.getOrderStatus()).isEqualTo(status.ORDER);
 
         Order cancelOrder = orderService.cancelOrder(order);
@@ -76,9 +75,9 @@ class OrderServiceTest {
         return foods;
     }
 
-    private User getUser() {
+    private Member getUser() {
         Address address = new Address("도시", "주소", "집");
-        User user = User.builder().
+        Member member = Member.builder().
                 email("mail1").
                 password("pw1").
                 name("user1").
@@ -87,8 +86,8 @@ class OrderServiceTest {
                 grade(GRADE.VIP).
                 build();
 
-        userService.save(user);
+        memberService.save(member);
 
-        return user;
+        return member;
     }
 }

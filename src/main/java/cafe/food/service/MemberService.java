@@ -5,9 +5,11 @@ import cafe.food.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class MemberService {
 
     private final MemberRepository memberRepository;
 
@@ -16,8 +18,16 @@ public class UserService {
         return save.getId();
     }
 
+    public Member findById(Long id) {
+        return memberRepository.findById(id).orElse(null);
+    }
+
     public Member findByName(String name) {
         return memberRepository.findByName(name).orElse(null);
+    }
+
+    public List<Member> findMembers() {
+        return memberRepository.findAll();
     }
 
 

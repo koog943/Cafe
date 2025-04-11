@@ -1,7 +1,7 @@
 package cafe.food.domain;
 
 import cafe.food.domain.food.OrderFood;
-import cafe.food.domain.member.User;
+import cafe.food.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,8 +23,8 @@ public class Order {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderFood> orderFoods = new ArrayList<>();
@@ -38,8 +38,8 @@ public class Order {
     private LocalDateTime createAT = LocalDateTime.now();
 
     @Builder
-    public Order(User user) {
-        this.user = user;
+    public Order(Member member) {
+        this.member = member;
     }
 
     public void addOrderFood(OrderFood orderFood) {
