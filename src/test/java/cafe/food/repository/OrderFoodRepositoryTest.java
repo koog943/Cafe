@@ -21,9 +21,10 @@ class OrderFoodRepositoryTest {
 
     @Test
     void orderFood() {
-        saveFood();
-        Dessert findDessert = (Dessert) foodRepository.findById(1L).orElse(null);
-        Drink findDrink = (Drink) foodRepository.findById(2L).orElse(null);
+        Dessert dessert = saveDessert();
+        Drink drink = saveDrink();
+        Dessert findDessert = (Dessert) foodRepository.findById(dessert.getId()).orElse(null);
+        Drink findDrink = (Drink) foodRepository.findById(drink.getId()).orElse(null);
 
         OrderFood orderDessert = OrderFood.builder()
                 .food(findDessert)
@@ -33,31 +34,37 @@ class OrderFoodRepositoryTest {
                 .food(findDrink)
                 .build();
 
-        orderFoodRepository.save(orderDessert);
-        orderFoodRepository.save(orderDrink);
+        OrderFood order1 = orderFoodRepository.save(orderDessert);
+        OrderFood order2 = orderFoodRepository.save(orderDrink);
 
-        OrderFood findFood1 = orderFoodRepository.findById(1L).orElse(null);
-        OrderFood findFood2 = orderFoodRepository.findById(2L).orElse(null);
+        OrderFood findFood1 = orderFoodRepository.findById(order1.getId()).orElse(null);
+        OrderFood findFood2 = orderFoodRepository.findById(order2.getId()).orElse(null);
 
         Assertions.assertThat(findFood1).isEqualTo(orderDessert);
         Assertions.assertThat(findFood2).isEqualTo(orderDrink);
 
     }
 
-    private void saveFood() {
-        Food dessert = Dessert.builder()
-                .name("케이크")
-                .price(5000)
-                .quantity(100)
-                .build();
-
-        Food dirnk = Drink.builder()
+    private Drink saveDrink() {
+        Drink drink = Drink.builder()
                 .name("아메리카노")
                 .price(3000)
-                .quantity(200)
+                .quantity(5)
+                .build();
+
+        foodRepository.save(drink);
+
+        return drink;
+    }
+
+    private Dessert saveDessert() {
+        Dessert dessert = Dessert.builder()
+                .name("케이크")
+                .price(5000)
+                .quantity(2)
                 .build();
 
         foodRepository.save(dessert);
-        foodRepository.save(dirnk);
+        return  dessert;
     }
 }

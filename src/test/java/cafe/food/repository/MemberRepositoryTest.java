@@ -30,7 +30,6 @@ public class MemberRepositoryTest {
                 password("pw1").
                 name("user1").
                 address(address).
-                grade(GRADE.VIP).
                 build();
 
         Admin admin = Admin.builder()

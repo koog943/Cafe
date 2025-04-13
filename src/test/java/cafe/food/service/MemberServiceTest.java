@@ -29,8 +29,6 @@ class MemberServiceTest {
                 password("pw1").
                 name("user1").
                 address(address).
-                phone("010-1111-1111").
-                grade(GRADE.VIP).
                 build();
 
         Long saveId = memberService.save(member);
@@ -48,7 +46,6 @@ class MemberServiceTest {
                 password("pw1").
                 name("user1").
                 address(address).
-                grade(GRADE.VIP).
                 build();
 
         Long saveId = memberService.save(member);

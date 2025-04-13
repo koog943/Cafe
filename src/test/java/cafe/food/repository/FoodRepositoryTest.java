@@ -32,11 +32,11 @@ class FoodRepositoryTest {
                 .quantity(200)
                 .build();
 
-        foodRepository.save(dessert);
-        foodRepository.save(dirnk);
+        Long dessertId = foodRepository.save(dessert).getId();
+        Long drinkId = foodRepository.save(dirnk).getId();
 
-        Dessert findDessert = (Dessert) foodRepository.findById(1L).orElse(null);
-        Drink findDrink = (Drink) foodRepository.findById(2L).orElse(null);
+        Dessert findDessert = (Dessert) foodRepository.findById(dessertId).orElse(null);
+        Drink findDrink = (Drink) foodRepository.findById(drinkId).orElse(null);
 
         Assertions.assertThat(findDessert).isEqualTo(dessert);
         Assertions.assertThat(findDrink).isEqualTo(dirnk);

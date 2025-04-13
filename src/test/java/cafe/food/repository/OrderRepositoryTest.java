@@ -100,7 +100,6 @@ class OrderRepositoryTest {
                 password("pw1").
                 name("user1").
                 address(address).
-                grade(GRADE.VIP).
                 build();
 
         return member;

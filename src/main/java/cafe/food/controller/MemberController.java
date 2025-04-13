@@ -55,7 +55,7 @@ public class MemberController {
         return "/members/memberList";
     }
 
-    @GetMapping("/members/{id}")
+    @GetMapping("/member/{id}")
     public String member(@PathVariable(name = "id") Long id, Model model) {
         Member findMember = memberService.findById(id);
         model.addAttribute("resMember", new ResMember(findMember));

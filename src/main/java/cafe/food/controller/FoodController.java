@@ -68,7 +68,6 @@ public class FoodController {
                 .map((food) -> new ResFood(food))
                 .collect(Collectors.toList());
         model.addAttribute("foodList", foodList);
-
         return "/foods/foodList";
     }
 
