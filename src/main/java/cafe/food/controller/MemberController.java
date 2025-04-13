@@ -29,8 +29,7 @@ public class MemberController {
     }
 
     @PostMapping("/members/new")
-    public String saveMember(MemberForm memberForm, RedirectAttributes redirectAttributes) {
-
+    public String saveMember(@ModelAttribute(name = "memberForm") MemberForm memberForm, RedirectAttributes redirectAttributes) {
         Address address = new Address();
         address.setCity(memberForm.getCity());
         address.setZip(memberForm.getZip());
@@ -44,7 +43,8 @@ public class MemberController {
                 .build();
 
         Long saveId = memberService.save(member);
-        return "redirect:/member/" + saveId;
+        redirectAttributes.addAttribute("saveId", saveId);
+        return "redirect:/member/{saveId}";
     }
 
     @GetMapping("/members")
@@ -55,7 +55,7 @@ public class MemberController {
         return "/members/memberList";
     }
 
-    @GetMapping("/member/{id}")
+    @GetMapping("/members/{id}")
     public String member(@PathVariable(name = "id") Long id, Model model) {
         Member findMember = memberService.findById(id);
         model.addAttribute("resMember", new ResMember(findMember));

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}" >
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!-- Custom styles for this template -->
+  <link href="/css/jumbotron-narrow.css" rel="stylesheet">
+
+</head>
+<style>
+  .fieldError {
+      border-color: #bd2130;
+  }
+</style>
+<body>
+
+<div class="container">
+  <div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
+
+  <form role="form" th:object="${resFood}">
+    <div class="form-group">
+      <label th:for="foodType">음식 종류</label>
+      <input type="text" th:field="*{foodType}" class="form-control" readonly>
+    </div>
+    <div class="form-group">
+      <label th:for="name">상품명</label>
+      <input type="text" th:field="*{name}" class="form-control" readonly>
+    </div>
+    <div class="form-group">
+      <label th:for="price">가격</label>
+      <input type="number" th:field="*{price}" class="form-control" readonly>
+    </div>
+    <div class="form-group">
+      <label th:for="stockQuantity">수량</label>
+      <input type="number" th:field="*{quantity}" class="form-control" readonly>
+    </div>
+  </form>
+  <br/>
+  <div th:replace="~{fragments/footer :: footer}" />
+</div> <!-- /container -->
+
+</body>
+</html>

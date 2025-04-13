@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +35,10 @@ public class Member {
     private Address address;
 
     @Builder
-    public Member(String name, String email, String password, String phone, GRADE grade, Address address) {
+    public Member(String name, String email, String password, Address address) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.grade = grade;
         this.address = address;
     }
 
