@@ -46,4 +46,16 @@ public class Order {
         orderFoods.add(orderFood);
         orderPrice += orderFood.getTotalPrice();
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", member=" + member.getName() +
+                ", orderFoods=" + orderFoods.stream().toString() +
+                ", orderStatus=" + orderStatus.toString() +
+                ", orderPrice=" + orderPrice +
+                ", createAT=" + createAT +
+                '}';
+    }
 }

@@ -34,4 +34,11 @@ public class OrderFood {
         this.count = food.getQuantity();
         this.totalPrice = food.getPrice() * count;
     }
+
+    @Override
+    public String toString() {
+        return "OrderFood{" +
+                "food=" + food.getName() +
+                '}';
+    }
 }

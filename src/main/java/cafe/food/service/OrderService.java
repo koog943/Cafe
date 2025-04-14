@@ -17,6 +17,23 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
+    public Order order(Member member, Food food) {
+        Order order = Order.builder()
+                .member(member)
+                .build();
+
+        OrderFood orderFood = OrderFood.builder()
+                .order(order)
+                .food(food)
+                .build();
+
+        order.addOrderFood(orderFood);
+        member.addOrder(order);
+
+        orderRepository.save(order);
+        return order;
+    }
+
     public Order order(Member member, List<Food> foods) {
         Order order = Order.builder()
                 .member(member)
@@ -32,6 +49,7 @@ public class OrderService {
         });
 
         member.addOrder(order);
+        orderRepository.save(order);
         return order;
     }
 
