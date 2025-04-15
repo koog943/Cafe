@@ -28,7 +28,7 @@ public class QDessert extends EntityPathBase<Dessert> {
     public final StringPath name = _super.name;
 
     //inherited
-    public final ListPath<OrderFood, QOrderFood> orderFood = _super.orderFood;
+    public final ListPath<OrderFood, QOrderFood> orderFoods = _super.orderFoods;
 
     //inherited
     public final NumberPath<Integer> price = _super.price;

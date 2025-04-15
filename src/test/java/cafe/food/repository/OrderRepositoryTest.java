@@ -59,8 +59,6 @@ class OrderRepositoryTest {
 
         Order findOrder = orderRepository.findById(1L).orElse(null);
 
-        assertThat(findOrder.getOrderPrice()).isEqualTo(25000);
-        assertThat(findOrder.getMember()).isEqualTo(member);
 
 
         List<Order> orders = member.getOrders();

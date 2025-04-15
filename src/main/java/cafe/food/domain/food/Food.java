@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn
+@DiscriminatorColumn(name = "dtype")
 @SuperBuilder
 @Getter
 @NoArgsConstructor
@@ -26,6 +26,6 @@ public abstract class Food {
     private int quantity;
 
     @OneToMany(mappedBy = "food", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<OrderFood> orderFood;
+    private List<OrderFood> orderFoods;
 
 }

@@ -15,7 +15,7 @@ public class OrderFood {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_id")
     private Food food;
 
@@ -28,10 +28,10 @@ public class OrderFood {
     private int totalPrice;
 
     @Builder
-    public OrderFood(Food food, Order order) {
+    public OrderFood(Food food, Order order, int count) {
         this.food = food;
         this.order = order;
-        this.count = food.getQuantity();
+        this.count = count;
         this.totalPrice = food.getPrice() * count;
     }
 

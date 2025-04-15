@@ -25,7 +25,7 @@ public class Member {
 
     private String password;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

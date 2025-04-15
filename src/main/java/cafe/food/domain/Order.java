@@ -31,9 +31,7 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     @Setter
-    private status orderStatus = status.ORDER;
-
-    private int orderPrice;
+    private Status orderStatus = Status.ORDER;
 
     private LocalDateTime createAT = LocalDateTime.now();
 
@@ -44,7 +42,6 @@ public class Order {
 
     public void addOrderFood(OrderFood orderFood) {
         orderFoods.add(orderFood);
-        orderPrice += orderFood.getTotalPrice();
     }
 
     @Override
@@ -54,7 +51,6 @@ public class Order {
                 ", member=" + member.getName() +
                 ", orderFoods=" + orderFoods.stream().toString() +
                 ", orderStatus=" + orderStatus.toString() +
-                ", orderPrice=" + orderPrice +
                 ", createAT=" + createAT +
                 '}';
     }

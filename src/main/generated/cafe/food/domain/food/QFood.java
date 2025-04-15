@@ -24,7 +24,7 @@ public class QFood extends EntityPathBase<Food> {
 
     public final StringPath name = createString("name");
 
-    public final ListPath<OrderFood, QOrderFood> orderFood = this.<OrderFood, QOrderFood>createList("orderFood", OrderFood.class, QOrderFood.class, PathInits.DIRECT2);
+    public final ListPath<OrderFood, QOrderFood> orderFoods = this.<OrderFood, QOrderFood>createList("orderFoods", OrderFood.class, QOrderFood.class, PathInits.DIRECT2);
 
     public final NumberPath<Integer> price = createNumber("price", Integer.class);
 

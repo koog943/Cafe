@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 @NoArgsConstructor
+@DiscriminatorValue("drink")
 public class Drink extends Food{
 
 //    @Enumerated(EnumType.STRING)

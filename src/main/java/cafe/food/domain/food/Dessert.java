@@ -10,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 @NoArgsConstructor
+@DiscriminatorValue("dessert")
 public class Dessert extends Food{
 
 
