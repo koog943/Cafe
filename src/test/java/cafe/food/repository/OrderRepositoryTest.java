@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
+@ActiveProfiles("test")
 class OrderRepositoryTest {
 
     @Autowired
@@ -43,51 +44,48 @@ class OrderRepositoryTest {
         OrderFood orderDessert = OrderFood.builder()
                 .food(dessert)
                 .order(order)
+                .count(2)
                 .build();
         // 10000
 
         OrderFood orderDrink = OrderFood.builder()
                 .food(drink)
                 .order(order)
+                .count(5)
                 .build();
         // 15000
 
         order.addOrderFood(orderDessert);
         order.addOrderFood(orderDrink);
 
-        orderRepository.save(order);
+        Order save = orderRepository.save(order);
 
-        Order findOrder = orderRepository.findById(1L).orElse(null);
+        Order findOrder = orderRepository.findById(save.getId()).orElse(null);
 
-
-
-        List<Order> orders = member.getOrders();
-
-        System.out.println("====================");
-        for (Order order1 : orders) {
-            System.out.println("order1 = " + order1);
-        }
-
-
+        assertThat(findOrder.getId()).isEqualTo(save.getId());
+        assertThat(findOrder.getMember().getId()).isEqualTo(save.getMember().getId());
+        assertThat(findOrder.getOrderFoods().size()).isEqualTo(save.getOrderFoods().size());
     }
 
     private Drink saveDrink() {
         Drink dirnk = Drink.builder()
                 .name("아메리카노")
-                .price(3000)
+                .price(30000)
                 .quantity(5)
                 .build();
 
+        foodRepository.save(dirnk);
         return dirnk;
     }
 
     private Dessert saveDessert() {
         Dessert dessert = Dessert.builder()
                 .name("케이크")
-                .price(5000)
+                .price(50000)
                 .quantity(2)
                 .build();
 
+        foodRepository.save(dessert);
         return dessert;
     }
 
@@ -100,6 +98,7 @@ class OrderRepositoryTest {
                 address(address).
                 build();
 
+        memberRepository.save(member);
         return member;
     }
 }

@@ -2,6 +2,7 @@ package cafe.food.service;
 
 import cafe.food.domain.food.Food;
 import cafe.food.repository.FoodRepository;
+import cafe.food.response.ResFood;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,18 @@ public class FoodService {
 
     public List<Food> foodList() {
         return foodRepository.findAll();
+    }
+
+    @Transactional
+    public Food editName(Long id, String name) {
+        foodRepository.editName(id, name);
+        return foodRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    public Food editPrice(Long id, int price) {
+        foodRepository.editPrice(id, price);
+        return foodRepository.findById(id).orElse(null);
     }
 
 }

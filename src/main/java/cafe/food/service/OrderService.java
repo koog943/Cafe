@@ -7,7 +7,9 @@ import cafe.food.domain.member.Member;
 import cafe.food.domain.Status;
 import cafe.food.repository.OrderRepository;
 import cafe.food.repository.OrderRepositoryImpl;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +21,14 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
+    @Autowired
+    EntityManager em;
+
     @Transactional
     public Order order(Member member, Food food, int count) {
+        member = em.merge(member);
+        food = em.merge(food);
+
         Order order = Order.builder()
                 .member(member)
                 .build();
@@ -31,28 +39,9 @@ public class OrderService {
                 .count(count)
                 .build();
 
+        food.stockQuantity(orderFood.getCount());
+
         order.addOrderFood(orderFood);
-        member.addOrder(order);
-
-        orderRepository.save(order);
-        return order;
-    }
-
-    @Transactional
-    public Order order(Member member, List<Food> foods) {
-        Order order = Order.builder()
-                .member(member)
-                .build();
-
-        foods.stream().forEach(food -> {
-            OrderFood orderFood = OrderFood.builder()
-                    .order(order)
-                    .food(food)
-                    .build();
-
-            order.addOrderFood(orderFood);
-        });
-
         member.addOrder(order);
 
         orderRepository.save(order);
@@ -74,7 +63,7 @@ public class OrderService {
     }
 
     public List<Order> findByStatus(Status status) {
-        return orderRepository.findByOrderStatus(status);
+        return orderRepository.findByStatus(status);
     }
 
     public List<Order> findByMemberName(String name) {

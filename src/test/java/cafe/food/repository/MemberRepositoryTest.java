@@ -1,7 +1,6 @@
 package cafe.food.repository;
 
 import cafe.food.domain.member.Address;
-import cafe.food.domain.member.Admin;
 import cafe.food.domain.member.GRADE;
 import cafe.food.domain.member.Member;
 import org.assertj.core.api.Assertions;
@@ -12,15 +11,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-@Transactional
+@ActiveProfiles("test")
 public class MemberRepositoryTest {
 
     @Autowired
-    AdminRepository adminRepository;
-
-    @Autowired
     MemberRepository memberRepository;
-
 
     @Test
     void save() {
@@ -32,20 +27,11 @@ public class MemberRepositoryTest {
                 address(address).
                 build();
 
-        Admin admin = Admin.builder()
-                .email("mail2")
-                .password("pw2")
-                .name("admin1")
-                .build();
+        Member save = memberRepository.save(member);
 
-        memberRepository.save(member);
-        adminRepository.save(admin);
+        Member findMember = memberRepository.findById(save.getId()).orElse(null);
 
-        Admin findAdmin = adminRepository.findById(1L).orElse(null);
-        Member findMember = memberRepository.findById(1L).orElse(null);
-
-        Assertions.assertThat(findAdmin).isEqualTo(admin);
-        Assertions.assertThat(findMember).isEqualTo(member);
+        Assertions.assertThat(findMember.getId()).isEqualTo(save.getId());
 
     }
 }

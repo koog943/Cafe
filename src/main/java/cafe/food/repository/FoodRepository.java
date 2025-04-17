@@ -1,6 +1,7 @@
 package cafe.food.repository;
 
 import cafe.food.domain.food.Food;
+import cafe.food.response.ResFood;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Repository
-public interface FoodRepository extends JpaRepository<Food, Long> {
+public interface FoodRepository extends JpaRepository<Food, Long>, FoodRepositoryCustom {
     Optional<Food> findByName(String name);
 
     @Query("SELECT f FROM Food f LEFT JOIN FETCH f.orderFoods WHERE f.name = :name")

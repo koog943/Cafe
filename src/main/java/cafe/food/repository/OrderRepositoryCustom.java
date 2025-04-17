@@ -9,4 +9,6 @@ import java.util.List;
 public interface OrderRepositoryCustom {
     List<Order> findByMemberName(String name);
     List<Order> findByMemberNameAndStatus(String name, Status status);
+    List<Order> findByStatus(Status status);
+
 }

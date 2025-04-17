@@ -3,6 +3,8 @@ package cafe.food.domain;
 import cafe.food.domain.food.OrderFood;
 import cafe.food.domain.member.Member;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +26,7 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
+    @NotNull
     private Member member;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
@@ -41,17 +44,6 @@ public class Order {
     }
 
     public void addOrderFood(OrderFood orderFood) {
-        orderFoods.add(orderFood);
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", member=" + member.getName() +
-                ", orderFoods=" + orderFoods.stream().toString() +
-                ", orderStatus=" + orderStatus.toString() +
-                ", createAT=" + createAT +
-                '}';
+        this.orderFoods.add(orderFood);
     }
 }

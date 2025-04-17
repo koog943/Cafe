@@ -6,6 +6,7 @@ import cafe.food.domain.food.Food;
 import cafe.food.domain.member.Address;
 import cafe.food.domain.member.Member;
 import cafe.food.request.FoodType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ public class ResFood {
 
     private int quantity;
 
+    @JsonProperty("foodType")
     private FoodType foodType;
 
     public ResFood(Food food) {
@@ -29,6 +31,10 @@ public class ResFood {
         } else if (food instanceof Dessert) {
             this.foodType = FoodType.DESSERT;
         }
+    }
+
+    public ResFood() {
 
     }
+
 }
