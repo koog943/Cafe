@@ -27,6 +27,12 @@
       <input type="text" th:field="*{foodType}" class="form-control" readonly>
     </div>
     <div class="form-group">
+      <label th:for="img">음식 사진</label>
+      <br>
+      <img src="../../static/img/food_3.png" th:src="@{'/img/' + *{img} + '.png'}" class="img-thumbnail" alt="...">
+    </div>
+
+    <div class="form-group">
       <label th:for="name">상품명</label>
       <input type="text" th:field="*{name}" class="form-control" readonly>
     </div>

@@ -19,6 +19,8 @@ public class ResFood {
 
     private int quantity;
 
+    private String img;
+
     @JsonProperty("foodType")
     private FoodType foodType;
 
@@ -26,6 +28,7 @@ public class ResFood {
         this.name = food.getName();
         this.price = food.getPrice();
         this.quantity = food.getQuantity();
+        this.img = "food_" + food.getId();
         if (food instanceof Drink) {
             this.foodType = FoodType.DRINK;
         } else if (food instanceof Dessert) {

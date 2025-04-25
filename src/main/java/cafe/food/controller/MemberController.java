@@ -5,6 +5,7 @@ import cafe.food.domain.member.Member;
 import cafe.food.request.MemberForm;
 import cafe.food.response.ResMember;
 import cafe.food.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,13 @@ public class MemberController {
     }
 
     @PostMapping("/members/new")
-    public String saveMember(@ModelAttribute(name = "memberForm") MemberForm memberForm, RedirectAttributes redirectAttributes) {
+    public String saveMember(@ModelAttribute(name = "memberForm") @Valid MemberForm memberForm,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors() == true) {
+            return "/members/createMemberForm";
+        }
+
         Address address = new Address();
         address.setCity(memberForm.getCity());
         address.setZip(memberForm.getZip());

@@ -1,15 +1,29 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: header}" />
-<body>
+<head th:replace="~{fragments/header :: header}" >
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="/css/jumbotron-narrow.css" rel="stylesheet">
+</head>
 
+<body>
 <div class="container">
     <div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
-
-    <form th:action="@{/foods/new}" th:object="${form}" method="post">
+    <form th:action="@{/foods/new}" th:object="${form}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label th:for="name">상품명</label>
             <input type="text" th:field="*{name}" class="form-control" placeholder="이름을 입력하세요">
+        </div>
+        <div class="mb-3">
+            <label for="imageInput" class="form-label">이미지</label>
+            <input class="form-control" name="file" type="file" id="imageInput">
+            <img id="preview" src="" alt="미리보기 이미지" style="max-width: 300px; display: none;">
         </div>
         <div class="form-group">
             <label th:for="price">가격</label>
@@ -34,6 +48,27 @@
 
 </div> <!-- /container -->
 
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const preview = document.getElementById('preview');
 
+    imageInput.addEventListener('change', function () {
+      const file = this.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        }
+
+        reader.readAsDataURL(file);
+      } else {
+        preview.src = '';
+        preview.style.display = 'none';
+      }
+    });
+</script>
 </body>
 </html>
