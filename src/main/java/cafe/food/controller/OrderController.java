@@ -4,11 +4,14 @@ import cafe.food.domain.Order;
 import cafe.food.domain.Status;
 import cafe.food.domain.food.Food;
 import cafe.food.domain.member.Member;
+import cafe.food.request.LoginForm;
 import cafe.food.request.OrderForm;
 import cafe.food.request.OrderSearchForm;
 import cafe.food.service.FoodService;
 import cafe.food.service.MemberService;
 import cafe.food.service.OrderService;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,9 +30,11 @@ public class OrderController {
     private final MemberService memberService;
 
     @GetMapping("/order")
-    public String orderForm(@SessionAttribute(name = LOGIN_MEMBER)Member member, Model model) {
+    public String orderForm(@SessionAttribute(name = LOGIN_MEMBER, required = false)Member member,
+                            Model model) {
         if (member == null) {
-            return "/home";
+            model.addAttribute("loginForm", new LoginForm());
+            return "/login/loginForm";
         }
         OrderForm orderForm = new OrderForm();
         orderForm.setMemberName(member.getName());
