@@ -14,9 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import static cafe.food.domain.SessionConst.LOGIN_MEMBER;
 
 @Slf4j
 @Controller
@@ -26,13 +26,23 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/login")
-    public String loginForm(Model model) {
+    public String loginForm(
+            @SessionAttribute(name = LOGIN_MEMBER, required = false)Member member,
+            Model model) {
+        if (member != null) {
+            return "/loginHome";
+        }
+
         model.addAttribute("loginForm", new LoginForm());
         return "/login/loginForm";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute(name = "loginForm") @Valid LoginForm loginForm, BindingResult bindingResult, HttpServletRequest request, Model model) {
+    public String login(@ModelAttribute(name = "loginForm") @Valid LoginForm loginForm,
+                        BindingResult bindingResult,
+                        HttpServletRequest request,
+                        @RequestParam(defaultValue = "/") String redirectURL,
+                        Model model) {
         if(bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
             return "/login/loginForm";
@@ -41,13 +51,13 @@ public class LoginController {
         Member login = loginService.login(loginForm);
 
         if(login == null) {
-            model.addAttribute("loginForm", new LoginForm());
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             return "/login/loginForm";
         }
 
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, login);
-        return "redirect:/";
+        return "redirect:" + redirectURL;
     }
 
     @GetMapping("/logout")

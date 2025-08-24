@@ -3,8 +3,10 @@ package cafe.food.controller;
 import cafe.food.domain.food.Dessert;
 import cafe.food.domain.food.Drink;
 import cafe.food.domain.food.Food;
+import cafe.food.domain.member.Member;
 import cafe.food.request.FoodForm;
 import cafe.food.request.FoodType;
+import cafe.food.request.LoginForm;
 import cafe.food.response.ResFood;
 import cafe.food.service.FoodService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static cafe.food.domain.SessionConst.LOGIN_MEMBER;
 
 @Slf4j
 @Controller
@@ -81,7 +85,6 @@ public class FoodController {
                 log.info("fullpath={}", fullPath);
                 file.transferTo(new File(fullPath));
             }
-
 
             redirectAttributes.addAttribute("saveId", saveId);
         }

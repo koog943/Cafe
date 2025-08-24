@@ -14,12 +14,18 @@ import java.util.List;
 import static cafe.food.request.FoodType.DRINK;
 
 @RestController
+@RequestMapping("/food")
 @RequiredArgsConstructor
 public class FoodAPIController {
 
     private final FoodService foodService;
 
-    @PostMapping("/food/post")
+    @GetMapping("test")
+    public String test() {
+        return "ok";
+    }
+
+    @PostMapping("/post")
     public Food foodPost(@RequestBody ResFood resFood) {
         Food food = null;
         if (resFood.getFoodType() == FoodType.DESSERT) {
@@ -42,19 +48,19 @@ public class FoodAPIController {
         return food;
     }
 
-    @GetMapping("/food/{id}")
+    @GetMapping("/{id}")
     public Food foodId(@PathVariable(value = "id") Long id) {
         Food food = foodService.findById(id);
         return food;
     }
 
-    @PatchMapping("/food/editName/{id}")
+    @PatchMapping("/editName/{id}")
     public Food editFoodName(@PathVariable(value = "id") Long id, @RequestBody ResFood resFood) {
         Food food = foodService.editName(id, resFood.getName());
         return food;
     }
 
-    @PatchMapping("/food/editPrice/{id}")
+    @PatchMapping("/editPrice/{id}")
     public Food editFoodPrice(@PathVariable(value = "id") Long id, @RequestBody ResFood resFood) {
         Food food = foodService.editPrice(id, resFood.getPrice());
         return food;
