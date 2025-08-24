@@ -19,7 +19,11 @@ spring:
         default_batch_fetch_size: 100
 
 file:
-  dir: C:\Users\KyeongRok You\Documents\food\src\main\resources\static\img\
+  dir: food\src\main\resources\static\img\
+
+Pay:
+  cid: TC0ONETIME
+  key: SECRET_KEY
 
 logging.level:
   org.hibernate.SQL: debug
