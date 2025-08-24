@@ -1,5 +1,9 @@
 # 푸드 주문웹 구현
 
+기술스택 : Spring, Thymeleaf
+
+카카오페이를 이용한 카페 결제 시스템 구현
+
  ## 메인페이지
 
 ![Image](https://github.com/user-attachments/assets/5fbf09a5-65a2-47a8-876a-d645145510b8)
